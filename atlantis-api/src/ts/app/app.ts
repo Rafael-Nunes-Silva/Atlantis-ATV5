@@ -1,42 +1,12 @@
-// // import Processo from "../abstracoes/processo";
-// // import CadastroAcomodacoes from "../processos/cadastroAcomodacoes";
-// // import Principal from "../processos/principal";
-// // const express = require("express");
-
-// // console.clear();
-// // console.log(`Bem-vindo(a) ao melhor sistema de gestão de clubes, hotéis e resorts do mundo, o Atlantis :)`);
-
-// // let processo: Processo;
-// // processo = new CadastroAcomodacoes();
-// // processo.processar();
-
-// // let execucao: Boolean = true;
-// // while (execucao) {
-// //     processo = new Principal();
-// //     processo.processar();
-// //     execucao = processo.Execucao;
-// // }
-
-
-
-
-
-
-
-
-
-
-
-
-
+// import Express from "express";
 const express = require("express");
 const cors = require("cors");
 
-const Acomodacao = require("./rotas/Acomodacao");
-const Cliente = require("./rotas/Cliente");
-const Documento = require("./rotas/Documento");
-const Endereco = require("./rotas/Endereco");
-const Telefone = require("./rotas/Telefone");
+const Acomodacao = require("../rotas/Acomodacao");
+const Cliente = require("../rotas/Cliente");
+const Documento = require("../rotas/Documento");
+const Endereco = require("../rotas/Endereco");
+const Telefone = require("../rotas/Telefone");
 
 
 const PORT = 7000;

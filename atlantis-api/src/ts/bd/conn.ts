@@ -2,9 +2,10 @@ const mysql = require("mysql2");
 
 export function CreateConnection(): any {
     return mysql.createConnection({
-        host: "127.0.0.1:3306",
+        host: "127.0.0.1",
         user: "root",
         password: "fatec",
+        database: "atlantis",
         ssl: {
             rejectUnauthorized: false
         }
@@ -14,3 +15,5 @@ export function CreateConnection(): any {
 export function EndConnection(conn: any) {
     conn.end();
 }
+
+module.exports = { CreateConnection, EndConnection };

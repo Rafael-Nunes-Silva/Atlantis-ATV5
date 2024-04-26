@@ -1,14 +1,15 @@
-const express = require("express");
-const router = express.Router();
+import Express from "express";
+const router = Express.Router();
 
-import { CreateConnection, EndConnection } from "./conn";
+const { CreateConnection, EndConnection } = require("../bd/conn");
 
 router.post(
-    "/getTodas",
+    "/listagem/:cliente_id",
     function (req: any, res: any) {
+        const cliente_id = req.params.cliente_id;
         const dbConn = CreateConnection();
         dbConn.query(
-            `select (per_cod, per_desc, per_resposta) from Perguntas where emp_cod = ${emp_cod};`,
+            `select * from telefone where cliente_id = ${cliente_id};`,
             function (err: any, result: any, fields: any) {
                 if (err) {
                     res.status(500).json({ msg: err });
@@ -17,7 +18,7 @@ router.post(
                 }
 
                 if (result.length <= 0) {
-                    res.status(400).json({ msg: `Essa empresa ainda não possui perguntas` });
+                    res.status(400).json({ msg: `Não há telefones cadastrados para o cliente ${cliente_id}` });
                     EndConnection(dbConn);
                     return;
                 }
@@ -26,7 +27,6 @@ router.post(
                 EndConnection(dbConn);
             }
         );
-
     }
 );
 
