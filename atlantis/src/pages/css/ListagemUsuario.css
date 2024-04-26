@@ -1,0 +1,34 @@
+.list-usuario-div {
+    background-color: #338bc1;
+    margin: auto;
+    max-width: 80%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 25px;
+    padding: 25px;
+}
+
+.list-usuario {
+    display: flex;
+    flex-direction: column;
+}
+
+.list-table {
+    background-color: #d1e6ff;
+}
+
+.list-table-row.light {
+    background-color: #d1e6ff;
+}
+
+.list-table-row.dark {
+    background-color: #b4c5db;
+}
+
+.deletar-img,
+.editar-img {
+    width: 20px;
+    height: 20px;
+}

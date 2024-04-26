@@ -1,0 +1,22 @@
+* {
+  margin: 0;
+  padding: 0;
+  border: 0;
+
+  box-sizing: border-box;
+}
+
+#root {
+  height: 100vh;
+}
+
+.label-input-div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+}
+
+h1 {
+  margin: 20px 0px;
+}

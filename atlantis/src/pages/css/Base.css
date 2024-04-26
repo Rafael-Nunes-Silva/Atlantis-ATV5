@@ -1,0 +1,36 @@
+header {
+    background-color: #276ec4;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 5px 25px;
+}
+
+.nav-btn {
+    background-color: #589dc7;
+    padding: 5px;
+    border-radius: 5px;
+    margin: 5px;
+
+    text-decoration: none;
+    color: black;
+}
+
+footer {
+    background-color: #276ec4;
+    text-align: center;
+}
+
+.base-div {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.btn {
+    margin: 5px;
+    padding: 5px;
+    border-radius: 5px;
+}

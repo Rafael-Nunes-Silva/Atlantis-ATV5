@@ -1,0 +1,57 @@
+.cad-usuario-div {
+    background-color: #338bc1;
+    margin: auto;
+    max-width: 80%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 25px;
+    padding: 25px;
+}
+
+.cad-usuario {
+    display: flex;
+    flex-direction: column;
+}
+
+.cad-endereco-div {
+    width: 60%;
+}
+
+.endereco-container {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.endereco-row {
+    display: flex;
+    gap: 10px;
+}
+
+.documento-remover-img {
+    width: 20px;
+    height: 20px;
+}
+
+.documento-btn-div {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.cad-documento-div {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.cad-documento-div>h1 {
+    margin: 20px 0px 0px 0px;
+}
+
+.btn-cadastrar {
+    margin: 25px 0px 0px 0px;
+    font-size: 24px;
+}
