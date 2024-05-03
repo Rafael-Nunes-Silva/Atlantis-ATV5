@@ -17,7 +17,7 @@ router.get(
                 }
 
                 if (result.length <= 0) {
-                    res.status(400).json({ msg: `Não há acomodações cadastradas` });
+                    res.status(404).json({ msg: `Não há acomodações cadastradas` });
                     EndConnection(dbConn);
                     return;
                 }

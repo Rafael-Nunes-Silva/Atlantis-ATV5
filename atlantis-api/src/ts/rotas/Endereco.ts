@@ -4,6 +4,38 @@ const router = Express.Router();
 const { CreateConnection, EndConnection } = require("../bd/conn");
 
 router.post(
+    "/cadastro",
+    function (req: any, res: any) {
+        const {
+            rua,
+            bairro,
+            cidade,
+            estado,
+            pais,
+            codigoPostal
+        } = req.body;
+        console.log(req.body);
+        const dbConn = CreateConnection();
+        dbConn.query(
+            `insert into endereco (rua, bairro, cidade, estado, pais, codigoPostal)
+            values ('${rua}', '${bairro}', '${cidade}', '${estado}', '${pais}', '${codigoPostal}');`,
+            function (err: any, result: any, fields: any) {
+                if (err) {
+                    res.status(500).json({ msg: err });
+                    EndConnection(dbConn);
+                    return;
+                }
+
+                console.log(result);
+
+                res.status(200).json(result);
+                EndConnection(dbConn);
+            }
+        );
+    }
+);
+
+router.get(
     "/listagem/:cliente_id",
     function (req: any, res: any) {
         const cliente_id = req.params.cliente_id;
@@ -18,7 +50,7 @@ router.post(
                 }
 
                 if (result.length <= 0) {
-                    res.status(400).json({ msg: `Não há endereços cadastrados para o cliente ${cliente_id}` });
+                    res.status(404).json({ msg: `Não há endereços cadastrados para o cliente ${cliente_id}` });
                     EndConnection(dbConn);
                     return;
                 }

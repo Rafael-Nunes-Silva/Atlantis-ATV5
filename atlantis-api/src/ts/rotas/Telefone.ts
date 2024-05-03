@@ -3,10 +3,11 @@ const router = Express.Router();
 
 const { CreateConnection, EndConnection } = require("../bd/conn");
 
-router.post(
+router.get(
     "/listagem/:cliente_id",
     function (req: any, res: any) {
         const cliente_id = req.params.cliente_id;
+        console.log(cliente_id);
         const dbConn = CreateConnection();
         dbConn.query(
             `select * from telefone where cliente_id = ${cliente_id};`,
@@ -18,7 +19,7 @@ router.post(
                 }
 
                 if (result.length <= 0) {
-                    res.status(400).json({ msg: `Não há telefones cadastrados para o cliente ${cliente_id}` });
+                    res.status(404).json({ msg: `Não há telefones cadastrados para o cliente ${cliente_id}` });
                     EndConnection(dbConn);
                     return;
                 }

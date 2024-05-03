@@ -18,7 +18,7 @@ router.get(
                 }
 
                 if (result.length <= 0) {
-                    res.status(400).json({ msg: `Não há documentos cadastrados para o cliente ${cliente_id}` });
+                    res.status(404).json({ msg: `Não há documentos cadastrados para o cliente ${cliente_id}` });
                     EndConnection(dbConn);
                     return;
                 }
