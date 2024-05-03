@@ -1,80 +1,58 @@
-import { Component } from "react";
+import { useEffect, useState } from "react";
 import "./css/Endereco.css";
 
 type Props = {
     onChange: CallableFunction
 };
 
-type State = {
-    rua: string,
-    bairro: string,
-    cidade: string,
-    estado: string,
-    pais: string,
-    codigoPostal: string
-};
+export default function Endereco(props: Props) {
+    const [endereco, setEndereco] = useState({
+        rua: "",
+        bairro: "",
+        cidade: "",
+        estado: "",
+        pais: "",
+        codigoPostal: ""
+    });
 
-export default class Endereco extends Component<Props, State> {
-    updateRua(rua: string) {
-        this.setState({ rua: rua });
-    }
+    useEffect(() => {
+        props.onChange(endereco);
+    }, [endereco])
 
-    updateBairro(bairro: string) {
-        this.setState({ bairro: bairro });
-    }
+    return (
+        <div className="cad-endereco-div">
+            <h1>Endereco</h1>
+            <div className="cad-endereco">
+                <div className="label-input-div">
+                    <label htmlFor="rua">Rua:</label>
+                    <input name="rua" type="text" maxLength={100} onInput={(event) => setEndereco({...endereco, rua: (event.target as HTMLInputElement).value})} />
+                </div>
 
-    updateCidade(cidade: string) {
-        this.setState({ cidade: cidade });
-    }
+                <div className="label-input-div">
+                    <label htmlFor="bairro">Bairro:</label>
+                    <input name="bairro" type="text" maxLength={50} onInput={(event) => setEndereco({...endereco, bairro: (event.target as HTMLInputElement).value})} />
+                </div>
 
-    updateEstado(estado: string) {
-        this.setState({ estado: estado });
-    }
+                <div className="label-input-div">
+                    <label htmlFor="cidade">Cidade:</label>
+                    <input name="cidade" type="text" maxLength={50} onInput={(event) => setEndereco({...endereco, cidade: (event.target as HTMLInputElement).value})} />
+                </div>
 
-    updatePais(pais: string) {
-        this.setState({ pais: pais });
-    }
+                <div className="label-input-div">
+                    <label htmlFor="estado">Estado:</label>
+                    <input name="estado" type="text" maxLength={20} onInput={(event) => setEndereco({...endereco, estado: (event.target as HTMLInputElement).value})} />
+                </div>
 
-    updateCodigoPostal(codigoPostal: string) {
-        this.setState({ codigoPostal: codigoPostal });
-    }
+                <div className="label-input-div">
+                    <label htmlFor="pais">Pais:</label>
+                    <input name="pais" type="text" maxLength={20} onInput={(event) => setEndereco({...endereco, pais: (event.target as HTMLInputElement).value})} />
+                </div>
 
-    render() {
-        return (
-            <div className="cad-endereco-div">
-                <h1>Endereco</h1>
-                <div className="cad-endereco">
-                    <div className="label-input-div">
-                        <label htmlFor="rua">Rua:</label>
-                        <input name="rua" type="text" onInput={(event) => this.updateRua((event.target as HTMLInputElement).value)} />
-                    </div>
-
-                    <div className="label-input-div">
-                        <label htmlFor="bairro">Bairro:</label>
-                        <input name="bairro" type="text" onInput={(event) => this.updateBairro((event.target as HTMLInputElement).value)} />
-                    </div>
-
-                    <div className="label-input-div">
-                        <label htmlFor="cidade">Cidade:</label>
-                        <input name="cidade" type="text" onInput={(event) => this.updateCidade((event.target as HTMLInputElement).value)} />
-                    </div>
-
-                    <div className="label-input-div">
-                        <label htmlFor="estado">Estado:</label>
-                        <input name="estado" type="text" onInput={(event) => this.updateEstado((event.target as HTMLInputElement).value)} />
-                    </div>
-
-                    <div className="label-input-div">
-                        <label htmlFor="pais">Pais:</label>
-                        <input name="pais" type="text" onInput={(event) => this.updatePais((event.target as HTMLInputElement).value)} />
-                    </div>
-
-                    <div className="label-input-div">
-                        <label htmlFor="codigoPostal">Código postal:</label>
-                        <input name="codigoPostal" type="text" onInput={(event) => this.updateCodigoPostal((event.target as HTMLInputElement).value)} />
-                    </div>
+                <div className="label-input-div">
+                    <label htmlFor="codigoPostal">Código postal:</label>
+                    <input name="codigoPostal" type="text" maxLength={8} onInput={(event) => setEndereco({...endereco, codigoPostal: (event.target as HTMLInputElement).value})} />
                 </div>
             </div>
-        );
-    }
+        </div>
+    );
 }

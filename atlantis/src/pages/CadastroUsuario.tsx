@@ -4,86 +4,73 @@ import Documento from "../components/Documento";
 import "./css/CadastroUsuario.css";
 
 export default function CadastroUsuario() {
-    const [state, setState] = useState({
+    const [cliente, setCliente] = useState({
         nome: "",
         nomeSocial: "",
         dataNascimento: "",
-        acomodacao: 0,
-        endereco: {
-            rua: "",
-            bairro: "",
-            cidade: "",
-            estado: "",
-            pais: "",
-            codigoPostal: ""
-        },
-        documentos: [{
+        id_acomodacao: 0,
+        id_titular: 0
+    });
+    const [endereco, setEndereco] = useState({
+        rua: "",
+        bairro: "",
+        cidade: "",
+        estado: "",
+        pais: "",
+        codigoPostal: ""
+    });
+    const [documentos, setDocumentos] = useState([{
+        tipo: 0,
+        numDocumento: "",
+        dataExpedicao: new Date()
+    }]);
+
+    function adicionarDocumento() {
+        setDocumentos([...documentos,
+        {
             tipo: 0,
             numDocumento: "",
             dataExpedicao: new Date()
-        }]
-    });
-
-    function adicionarDocumento() {
-        setState({
-            ...state,
-            documentos: [
-                ...state.documentos,
-                {
-                    tipo: 0,
-                    numDocumento: "",
-                    dataExpedicao: new Date()
-                }
-            ]
-        });
+        }]);
     }
 
     function removerDocumento() {
-        setState({
-            ...state,
-            documentos: state.documentos.slice(0, -1)
-        });
+        setDocumentos(documentos.slice(0, -1));
     }
 
     function listarDocumentos() {
         return (
             <div className="endereco-container">
-                {state.documentos.map((d, index) =>
-                    <div key={index} className="endereco-row">
-                        <Documento onChange={(state: any) => { d = state; }} />
-                    </div>
-                )}
+                {
+                    documentos.map((d, index) =>
+                        <div key={index} className="endereco-row">
+                            <Documento onChange={(state: any) => { d = state; }} />
+                        </div>
+                    )
+                }
             </div>
-        )
+        );
     }
 
     async function cadastrar() {
-        // const dbConn = CreateConnection();
+        console.log("endereco:", endereco);
+        // cadastrar endereco
+        const id_endereco = await fetch("http://localhost:7000/endereco/cadastro", {
+            method: "POST",
+            body: JSON.stringify(endereco)
+        }).then(response => response.json());
 
-        // Cadastro endereco
+        // cadastrar cliente
+        // const id_cliente = await fetch("http://localhost:7000/cliente/cadastro", {
+        //     method: "POST",
+        //     body: JSON.stringify(cliente)
+        // }).then(response => response.json());
 
-
-        // Cadastro cliente
-        // dbConn.query(
-        //     `insert into cliente (nome, nomeSocial, dataNascimento, dataCadastro, id_endereco, id_titular, id_acomodacao)
-        //     values (${state.nome}, ${state.nomeSocial}, ${state.dataNascimento}, ${Date.now()}, ${}, ${}, ${state.acomodacao});`,
-        //     function (err: any, result: any, fields: any) {
-        //         if (err) {
-        //             // res.status(500).json({ msg: err });
-        //             EndConnection(dbConn);
-        //             return;
-        //         }
-
-        //         if (result.length <= 0) {
-        //             // res.status(400).json({ msg: `Essa empresa ainda não possui perguntas` });
-        //             EndConnection(dbConn);
-        //             return;
-        //         }
-
-        //         // res.status(200).json(result);
-        //         EndConnection(dbConn);
-        //     }
-        // );
+        // // cadastrar documentos
+        // await fetch("http://localhost:7000/cliente/cadastro", {
+        //     method: "POST",
+        //     body: JSON.stringify({})
+        // }).then(response => response.json());
     }
 
     return (
@@ -108,10 +95,7 @@ export default function CadastroUsuario() {
                 <div className="label-input-div">
                     <label htmlFor="acomodacao">Acomodação:</label>
                     <select name="acomodacao" onChange={(e) => {
-                        setState({
-                            ...state,
-                            acomodacao: parseInt(e.target.selectedOptions[0].value)
-                        });
+                        setCliente({ ...cliente, id_acomodacao: parseInt(e.target.selectedOptions[0].value) });
                     }}>
                         <option value={1}>Acomodação simples para casal</option>
                         <option value={2}>Acomodação para família com até duas crianças</option>
@@ -124,11 +108,24 @@ export default function CadastroUsuario() {
             </div>
 
             <Endereco onChange={(data: any) => {
-                setState({
-                    ...state,
-                    endereco: data
-                });
+                setEndereco(data);
             }} />
+
+            <div className="cad-usuario-div">
+                <h1>Titular</h1>
+                <label htmlFor="acomodacao">Possui titular?</label>
+                <select name="acomodacao" onChange={(e) => {
+                    setCliente({ ...cliente, id_acomodacao: parseInt(e.target.selectedOptions[0].value) });
+                }}>
+                    <option value={0}>Sem titular</option>
+                    <option value={1}>Titular 1</option>
+                    <option value={2}>Titular 2</option>
+                    <option value={3}>Titular 3</option>
+                    <option value={4}>Titular 4</option>
+                    <option value={5}>Titular 5</option>
+                    <option value={6}>Titular 6</option>
+                </select>
+            </div>
 
             <div className="cad-documento-div">
                 <h1>Documentos</h1>
@@ -143,7 +140,6 @@ export default function CadastroUsuario() {
             </div>
 
             <button className="btn btn-cadastrar" onClick={cadastrar}>Cadastrar</button>
-
         </div>
     );
 }
