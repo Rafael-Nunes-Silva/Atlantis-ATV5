@@ -1,5 +1,5 @@
-// import Express from "express";
 const express = require("express");
+const bodyParser = require("body-parser");
 const cors = require("cors");
 
 const Acomodacao = require("../rotas/Acomodacao");
@@ -12,19 +12,19 @@ const Telefone = require("../rotas/Telefone");
 const PORT = 7000;
 
 const app = express();
-app.use(require("body-parser").urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.json());
 app.use(
     cors({
         origin: "*",
         method: ["GET", "POST"]
     })
 );
-app.use(express.json());
 
 app.listen(
     PORT,
     function () {
-        console.log(`API Atlantis aberta na porta ${7000}`);
+        console.log(`API Atlantis aberta na porta ${PORT}`);
     }
 );
 

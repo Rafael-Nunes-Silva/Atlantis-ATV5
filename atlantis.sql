@@ -65,3 +65,8 @@ insert into acomodacao (nomeAcomodacao, camaSolteiro, camaCasal, suite, climatiz
 		("Acomodação para família com até cinco crianças", 1, 5, true, 2, 2),
 		("Acomodação com garagem para solteiro(a)", 1, 0, true, 1, 1),
 		("Acomodação para até duas familias, casal e três crianças cada", 2, 6, true, 2, 3);
+
+insert into tipoDocumento (nome)
+    values ("Cadastro de Pessoa Física (CPF)"),
+        ("Registro Geral (RG)"),
+        ("Passaporte");

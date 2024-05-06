@@ -7,7 +7,6 @@ router.get(
     "/listagem/:cliente_id",
     function (req: any, res: any) {
         const cliente_id = req.params.cliente_id;
-        console.log(cliente_id);
         const dbConn = CreateConnection();
         dbConn.query(
             `select * from telefone where cliente_id = ${cliente_id};`,

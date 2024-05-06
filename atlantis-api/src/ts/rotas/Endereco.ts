@@ -14,7 +14,6 @@ router.post(
             pais,
             codigoPostal
         } = req.body;
-        console.log(req.body);
         const dbConn = CreateConnection();
         dbConn.query(
             `insert into endereco (rua, bairro, cidade, estado, pais, codigoPostal)
@@ -25,8 +24,6 @@ router.post(
                     EndConnection(dbConn);
                     return;
                 }
-
-                console.log(result);
 
                 res.status(200).json(result);
                 EndConnection(dbConn);
