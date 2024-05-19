@@ -44,10 +44,10 @@ create table documento (
 	id int not null primary key auto_increment,
     id_cliente int not null,
     numero varchar(100),
-    tipo int not null,
+    id_tipo int not null,
     dataExpedicao date,
     foreign key (id_cliente) references cliente(id),
-    foreign key (tipo) references tipoDocumento(id)
+    foreign key (id_tipo) references tipoDocumento(id)
 );
 
 create table telefone (
