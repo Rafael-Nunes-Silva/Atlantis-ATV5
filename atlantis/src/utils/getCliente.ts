@@ -1,5 +1,5 @@
 export default async function getCliente(id: number) {
-    const cliente = await fetch(`http://localhost:7000/cliente/listagem/${id}`)
+    const cliente = await fetch(`http://localhost:7000/cliente/listar/${id}`)
         .then(response => response.json());
 
     const endereco = await fetch(`http://localhost:7000/endereco/listagem/${id}`)
@@ -9,8 +9,8 @@ export default async function getCliente(id: number) {
         .then(response => response.json());
 
     return {
-        ...cliente,
-        endereco: endereco,
-        documentos: documentos
+        ...cliente[0],
+        endereco: endereco[0],
+        documentos: Array.isArray(documentos) ? documentos : []
     }
 }

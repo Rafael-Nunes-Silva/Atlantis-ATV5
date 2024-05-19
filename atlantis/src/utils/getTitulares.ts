@@ -1,4 +1,9 @@
 export default function getTitulares() {
-    return fetch("http://localhost:7000/cliente/listagemTitulares")
-        .then(response => response.json());
+    return fetch("http://localhost:7000/cliente/listagemTitular")
+        .then(response => response.json())
+        .then(data => {
+            if (Array.isArray(data))
+                return data;
+            return [];
+        });
 }

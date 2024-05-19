@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import "./css/Endereco.css";
 
-type Endereco = {
+type tEndereco = {
     rua: string,
     bairro: string,
     cidade: string,
@@ -11,23 +11,23 @@ type Endereco = {
 }
 
 type Props = {
-    defaultValues: Endereco | null,
+    defaultValues: tEndereco | null,
     onChange: CallableFunction
 };
 
 export default function Endereco(props: Props) {
     const [endereco, setEndereco] = useState({
-        rua: "",
-        bairro: "",
-        cidade: "",
-        estado: "",
-        pais: "",
-        codigoPostal: ""
-    } as Endereco);
+        rua: props.defaultValues?.rua,
+        bairro: props.defaultValues?.bairro,
+        cidade: props.defaultValues?.cidade,
+        estado: props.defaultValues?.estado,
+        pais: props.defaultValues?.pais,
+        codigoPostal: props.defaultValues?.codigoPostal,
+    } as tEndereco);
 
     useEffect(() => {
         props.onChange(endereco);
-    }, [endereco])
+    }, [endereco]);
 
     return (
         <div className="cad-endereco-div">
@@ -41,7 +41,10 @@ export default function Endereco(props: Props) {
                         maxLength={100}
                         defaultValue={props.defaultValues?.rua}
                         onInput={(event) =>
-                            setEndereco({ ...endereco, rua: (event.target as HTMLInputElement).value })
+                            setEndereco({
+                                ...endereco,
+                                rua: (event.target as HTMLInputElement).value
+                            })
                         }
                     />
                 </div>
@@ -54,7 +57,10 @@ export default function Endereco(props: Props) {
                         maxLength={50}
                         defaultValue={props.defaultValues?.bairro}
                         onInput={(event) =>
-                            setEndereco({ ...endereco, bairro: (event.target as HTMLInputElement).value })
+                            setEndereco({
+                                ...endereco,
+                                bairro: (event.target as HTMLInputElement).value
+                            })
                         }
                     />
                 </div>
@@ -67,7 +73,10 @@ export default function Endereco(props: Props) {
                         maxLength={50}
                         defaultValue={props.defaultValues?.cidade}
                         onInput={(event) =>
-                            setEndereco({ ...endereco, cidade: (event.target as HTMLInputElement).value })
+                            setEndereco({
+                                ...endereco,
+                                cidade: (event.target as HTMLInputElement).value
+                            })
                         }
                     />
                 </div>
@@ -80,7 +89,10 @@ export default function Endereco(props: Props) {
                         maxLength={20}
                         defaultValue={props.defaultValues?.estado}
                         onInput={(event) =>
-                            setEndereco({ ...endereco, estado: (event.target as HTMLInputElement).value })
+                            setEndereco({
+                                ...endereco,
+                                estado: (event.target as HTMLInputElement).value
+                            })
                         }
                     />
                 </div>
@@ -93,7 +105,10 @@ export default function Endereco(props: Props) {
                         maxLength={20}
                         defaultValue={props.defaultValues?.pais}
                         onInput={(event) =>
-                            setEndereco({ ...endereco, pais: (event.target as HTMLInputElement).value })
+                            setEndereco({
+                                ...endereco,
+                                pais: (event.target as HTMLInputElement).value
+                            })
                         }
                     />
                 </div>
@@ -106,7 +121,10 @@ export default function Endereco(props: Props) {
                         maxLength={8}
                         defaultValue={props.defaultValues?.codigoPostal}
                         onInput={(event) =>
-                            setEndereco({ ...endereco, codigoPostal: (event.target as HTMLInputElement).value })
+                            setEndereco({
+                                ...endereco,
+                                codigoPostal: (event.target as HTMLInputElement).value
+                            })
                         }
                     />
                 </div>

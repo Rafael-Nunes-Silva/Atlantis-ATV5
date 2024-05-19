@@ -25,8 +25,13 @@ type Cliente = {
     id_acomodacao: number
 }
 
+type tTipoDocumento = {
+    id: number,
+    nome: string
+}
+
 export default function CadastroUsuario() {
-    const [tiposDocumento, setTiposDocumento] = useState([]);
+    const [tiposDocumento, setTiposDocumento] = useState(new Array<tTipoDocumento>());
     const [acomodacoes, setAcomodacoes] = useState(new Array<Acomodacao>());
     const [titulares, setTitulares] = useState(new Array<Cliente>());
     const [cliente, setCliente] = useState({
@@ -51,14 +56,18 @@ export default function CadastroUsuario() {
     }]);
 
     useEffect(() => {
-        getTiposDocumento().then(d => setTiposDocumento(d));
-        getAcomodacoes().then((d: Acomodacao[]) => setAcomodacoes(d));
-        getTitulares().then((d: Cliente[]) => setTitulares(d));
+        try { getTiposDocumento().then(d => setTiposDocumento(d)) }
+        catch { setTiposDocumento([]) }
+
+        try { getAcomodacoes().then((d: Acomodacao[]) => setAcomodacoes(d)); }
+        catch { setAcomodacoes([]) }
+
+        try { getTitulares().then((d: Cliente[]) => setTitulares(d)); }
+        catch { setTitulares([]) }
     }, []);
 
     function adicionarDocumento() {
-        setDocumentos([...documentos,
-        {
+        setDocumentos([...documentos, {
             id_tipo: 0,
             numero: "",
             dataExpedicao: new Date()
@@ -78,13 +87,14 @@ export default function CadastroUsuario() {
                             index={index}
                             onChange={(index: number, data: any) => {
                                 setDocumentos(documentos.map((doc, i) => {
-                                    if (i == index) {
+                                    if (i === index) {
                                         return data;
                                     }
                                     return doc;
                                 }));
                             }}
                             tiposDocumento={tiposDocumento}
+                            defaultValues={null}
                         />
                     </div>
                 )}
@@ -92,7 +102,8 @@ export default function CadastroUsuario() {
         );
     }
 
-    async function cadastrar() {
+    async function cadastrar(e: any) {
+        console.log("submit");
         // cadastrar endereco
         const response_endereco = await fetch("http://localhost:7000/endereco/cadastro", {
             method: "POST",
@@ -139,7 +150,7 @@ export default function CadastroUsuario() {
     }
 
     return (
-        <div className="cad-usuario-div">
+        <form className="cad-usuario-div" onSubmit={cadastrar}>
             <h1>Cadastro de Usuário</h1>
             <div className="cad-usuario">
                 <div className="label-input-div">
@@ -208,7 +219,7 @@ export default function CadastroUsuario() {
                 </div>
             </div>
 
-            <button className="btn btn-cadastrar" onClick={cadastrar}>Cadastrar</button>
-        </div>
+            <button className="btn btn-cadastrar" type="submit">Cadastrar</button>
+        </form>
     );
 }

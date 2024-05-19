@@ -6,17 +6,24 @@ type tipoDocumento = {
     nome: string
 }
 
+type doc = {
+    id_tipo: number,
+    numero: string,
+    dataExpedicao: Date
+}
+
 type Props = {
     index: number,
     onChange: CallableFunction,
-    tiposDocumento: Array<tipoDocumento>
+    tiposDocumento: Array<tipoDocumento>,
+    defaultValues: doc | null,
 };
 
 export default function Documento(props: Props) {
     const [documento, setDocumento] = useState({
-        id_tipo: 0,
-        numero: "",
-        dataExpedicao: new Date()
+        id_tipo: props.defaultValues?.id_tipo || 0,
+        numero: props.defaultValues?.numero || "",
+        dataExpedicao: props.defaultValues?.dataExpedicao || new Date()
     });
 
     useEffect(() => {
@@ -32,7 +39,7 @@ export default function Documento(props: Props) {
                     onInput={(event) =>
                         setDocumento({ ...documento, id_tipo: parseInt((event.target as HTMLSelectElement).value) })
                     }
-                    defaultValue={0}
+                    defaultValue={props.defaultValues?.id_tipo}
                 >
                     <option disabled value={0}>-- Selecione o tipo do documento --</option>
                     {props.tiposDocumento.map(t =>
@@ -43,12 +50,28 @@ export default function Documento(props: Props) {
 
             <div className="label-input-div">
                 <label htmlFor="numDocumento">Documento:</label>
-                <input name="numDocumento" type="text" onInput={(event) => setDocumento({ ...documento, numero: (event.target as HTMLSelectElement).value })} />
+                <input
+                    name="numDocumento"
+                    type="text"
+                    onInput={(event) => setDocumento({
+                        ...documento,
+                        numero: (event.target as HTMLSelectElement).value
+                    })}
+                    defaultValue={props.defaultValues?.numero}
+                />
             </div>
 
             <div className="label-input-div">
                 <label htmlFor="dataExpedicao">Data Expedição:</label>
-                <input name="dataExpedicao" type="date" onInput={(event) => setDocumento({ ...documento, dataExpedicao: new Date((event.target as HTMLSelectElement).value) })} />
+                <input
+                    name="dataExpedicao"
+                    type="date"
+                    onInput={(event) => setDocumento({
+                        ...documento,
+                        dataExpedicao: new Date((event.target as HTMLSelectElement).value)
+                    })}
+                    defaultValue={props.defaultValues?.dataExpedicao.toLocaleString().slice(0, 10)}
+                />
             </div>
         </div>
     );

@@ -9,9 +9,8 @@ export default class Base extends Component {
                 <header>
                     <h1>Atlantis</h1>
                     <nav className="">
-                        <a href="CadastroUsuario" className="nav-btn">Cadastro</a>
-                        <a href="ListagemUsuario" className="nav-btn">Listagem</a>
-                        {/* <a href="EdicaoUsuario" className="nav-btn">Edição</a> */}
+                        <a href="../CadastroUsuario" className="nav-btn">Cadastro</a>
+                        <a href="../ListagemUsuario" className="nav-btn">Listagem</a>
                     </nav>
                 </header>
                 <Outlet />

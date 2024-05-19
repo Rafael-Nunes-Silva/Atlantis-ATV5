@@ -25,7 +25,48 @@ router.post(
                     return;
                 }
 
-                res.status(200).json(result);
+                res.status(201).json(result);
+                EndConnection(dbConn);
+            }
+        );
+    }
+);
+
+router.put(
+    "/atualizacao",
+    function (req: any, res: any) {
+        const {
+            id,
+            rua,
+            bairro,
+            cidade,
+            estado,
+            pais,
+            codigoPostal
+        } = req.body;
+
+        let query = "update endereco set";
+        let sets = [];
+        if (rua) sets.push(`rua = '${rua}'`);
+        if (bairro) sets.push(`bairro = '${bairro}'`);
+        if (cidade) sets.push(`cidade = '${cidade}'`);
+        if (estado) sets.push(`estado = '${estado}'`);
+        if (pais) sets.push(`pais = '${pais}'`);
+        if (codigoPostal) sets.push(`codigoPostal = '${codigoPostal}'`);
+        query += sets.join(", ");
+        query += ` where id = ${id};`;
+
+        const dbConn = CreateConnection();
+        dbConn.query(
+            query,
+            function (err: any, result: any, fields: any) {
+                if (err) {
+                    res.status(500).json({ msg: err });
+                    EndConnection(dbConn);
+                    return;
+                }
+
+                res.status(201).json(result);
                 EndConnection(dbConn);
             }
         );
@@ -33,12 +74,12 @@ router.post(
 );
 
 router.get(
-    "/listagem/:cliente_id",
+    "/listagem/:id",
     function (req: any, res: any) {
-        const cliente_id = req.params.cliente_id;
+        const id = req.params.id;
         const dbConn = CreateConnection();
         dbConn.query(
-            `select * from acomodacao where cliente_id = ${cliente_id};`,
+            `select * from endereco where id = ${id};`,
             function (err: any, result: any, fields: any) {
                 if (err) {
                     res.status(500).json({ msg: err });
@@ -47,7 +88,7 @@ router.get(
                 }
 
                 if (result.length <= 0) {
-                    res.status(404).json({ msg: `Não há endereços cadastrados para o cliente ${cliente_id}` });
+                    res.status(404).json({ msg: `Não há endereços cadastrados com o id ${id}` });
                     EndConnection(dbConn);
                     return;
                 }

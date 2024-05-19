@@ -16,7 +16,7 @@ router.post(
         const dbConn = CreateConnection();
         dbConn.query(
             `insert into documento (id_cliente, id_tipo, numero, dataExpedicao)
-            values (${id_cliente}, ${id_tipo}, '${numero}', '${dataExpedicao}');`,
+            values (${id_cliente}, ${id_tipo}, '${numero}', '${dataExpedicao.toLocaleString().slice(0, 10)}');`,
             function (err: any, result: any, fields: any) {
                 if (err) {
                     res.status(500).json({ msg: err });
@@ -24,7 +24,29 @@ router.post(
                     return;
                 }
 
-                res.status(200).json(result);
+                res.status(201).json(result);
+                EndConnection(dbConn);
+            }
+        );
+    }
+);
+
+router.delete(
+    "/deletar",
+    function (req: any, res: any) {
+        const id = req.body.id;
+
+        const dbConn = CreateConnection();
+        dbConn.query(
+            `delete from documento where id = ${id};`,
+            function (err: any, result: any, fields: any) {
+                if (err) {
+                    res.status(500).json({ msg: err });
+                    EndConnection(dbConn);
+                    return;
+                }
+
+                res.status(201).json(result);
                 EndConnection(dbConn);
             }
         );
